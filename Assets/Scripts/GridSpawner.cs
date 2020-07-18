@@ -9,45 +9,6 @@ public static class GameSpecifications
     public const float DISK_HEIGHT = 2f;
 }
 
-public class GridBubble
-{
-    bool isOccupied;
-    Bubble slotBubble;
-
-    public bool ContainsBubble => slotBubble != null; // remove
-    public bool IsActive => slotBubble.IsBubbleActive;
-
-    public GridBubble()
-    {
-
-    }
-
-    public GridBubble(GameObject bubbleGO)
-    {
-        Bubble slotBubble = bubbleGO.GetComponent<Bubble>();
-        this.slotBubble = slotBubble;
-    }
-
-    public void ActivateBubble(Vector3 position)
-    {
-        slotBubble.transform.localPosition = position;
-        slotBubble.ActivateBubble();
-    }
-
-    public void OffsetBubble(Vector3 offset)
-    {
-
-    }
-
-    internal void OffsetBubble(float v)
-    {
-        Debug.Log(slotBubble.transform.localPosition);
-        slotBubble.transform.Translate(0f, 0f, v, Space.Self);
-        Debug.Log(slotBubble.transform.localPosition);
-
-    }
-}
-
 public class GridSpawner : MonoBehaviour
 {
     public GameObject DiskPrefab;
@@ -57,6 +18,7 @@ public class GridSpawner : MonoBehaviour
     const int gridWidth = 6;
     const int gridHeight = 10;
     const float gridSpacing = 0.02f;
+    const int startingRows = 2;
 
     bool isOddRow;
     float bubbleRadius;
@@ -76,11 +38,20 @@ public class GridSpawner : MonoBehaviour
         isOddRow = gridHeight % 2 == 0 ? true : false;
     }
 
-    void StartFake()
+    public void CreateFirstRows(Action onCompleted)
+    {
+        StartCoroutine(CreateFirstRowsRoutine(onCompleted));
+    }
+
+    public void SpawnRow(OnRowSpawnResult onRowSpawn)
+    {
+        StartCoroutine(SpawnRowRoutine(onRowSpawn));
+    }
+
+    void GenerateInativeGrid()
     {
         for (int j = gridHeight - 1; j >= 0; j--)
         {
-
             for (int i = gridWidth - 1; i >= 0; i--)
             {
                 Vector3 offset = new Vector3(horizontalStep * i, 0f, -verticalStep * j);
@@ -91,11 +62,11 @@ public class GridSpawner : MonoBehaviour
         }
     }
 
-    public IEnumerator CreateFirstRows()
+    IEnumerator CreateFirstRowsRoutine(Action onCompleted)
     {
-        StartFake();
+        GenerateInativeGrid();
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < startingRows; j++)
         {
             float oddRowOffset = isOddRow ? bubbleRadius : 0f;
             isOddRow = !isOddRow;
@@ -115,14 +86,20 @@ public class GridSpawner : MonoBehaviour
                 bubble.OffsetBubble(-verticalStep);
             }
         }
+
+        onCompleted?.Invoke();
     }
 
-    public void SpawnRow(OnRowSpawnResult onRowSpawnResult)
+    IEnumerator SpawnRowRoutine(OnRowSpawnResult onRowSpawnResult)
     {
         bool isGameOver = false;
+        float oddRowOffset = isOddRow ? bubbleRadius : 0f;
+        isOddRow = !isOddRow;
 
         for (int i = 0; i < gridWidth; i++)
         {
+            yield return new WaitForSeconds(0.1f);
+
             // bubbleGrid.
             GridBubble lastSlot = bubbleGrid.Dequeue();
 
@@ -130,13 +107,23 @@ public class GridSpawner : MonoBehaviour
             {
                 //* Add a call to a dequeued Bubble, if it exists it could run some game over destruction anim 
                 isGameOver = true;
+                Debug.Log("game over");
             }
             else
             {
                 //* activate new slot
-                float xPosition = horizontalStep * i + (isOddRow ? bubbleDiameter : 0f);
+                float xPosition = horizontalStep * i + oddRowOffset;
                 lastSlot.ActivateBubble(new Vector3(xPosition, 0f, verticalStep));
                 bubbleGrid.Enqueue(lastSlot);
+            }
+        }
+
+        // * dirtyyy
+        if (!isGameOver)
+        {
+            foreach (var bubble in bubbleGrid)
+            {
+                bubble.OffsetBubble(-verticalStep);
             }
         }
 
