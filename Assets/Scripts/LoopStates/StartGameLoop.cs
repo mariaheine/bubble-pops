@@ -1,13 +1,18 @@
+using UnityEngine;
+
 public class StartGameLoop : LoopState
 {
-    public StartGameLoop(PlayLoop playLoop) : base(playLoop)
+
+    public StartGameLoop(PlayLoop playLoop, TweenerLib tweenerLib) : base(playLoop, tweenerLib)
     {
     }
 
     public override void Begin(object pastStateResult)
     {
+        playLoop.Player.rabbitParticles.Play(); // dirtyyy
+
         playLoop.GridSpawner.CreateFirstRows(
-            onCompleted: () => playLoop.SwitchState(PlayLoopState.PlayerAction)
+            onCompleted: () => playLoop.SwitchState(PlayLoopState.Preparation)
         );
 
     }

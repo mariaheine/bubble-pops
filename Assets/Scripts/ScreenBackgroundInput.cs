@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ScreenBackgroundInput : MonoBehaviour, IPointerClickHandler, IDragHandler, IEndDragHandler
+public class ScreenBackgroundInput : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     float halfScreenWidth;
 
     public Action<float> HorizontalPressLocationChanged;
+    public Action<float> HorizontalDragStarted;
+    public Action<float> HorizontalDragEnded;
 
     void Start()
     {
@@ -27,25 +29,24 @@ public class ScreenBackgroundInput : MonoBehaviour, IPointerClickHandler, IDragH
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // Vector2 localCursor;
-        // if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(GetComponent<RectTransform>(), eventData.position, eventData.pressEventCamera, out localCursor))
-        //     return;
 
-        // Debug.Log("LocalCursor:" + localCursor);
+    }
 
-        // float clickPosition = localCursor.x.Remap(-halfScreenWidth, halfScreenWidth, -1f, 1f);
-        // Debug.Log(clickPosition);
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        float pos = GetPressHorizontalPosition(eventData);
+        HorizontalDragStarted?.Invoke(pos);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         float pos = GetPressHorizontalPosition(eventData);
-        // Debug.Log(pos);
         HorizontalPressLocationChanged?.Invoke(pos);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Debug.Log();
+        float pos = GetPressHorizontalPosition(eventData);
+        HorizontalDragEnded?.Invoke(pos);
     }
 }

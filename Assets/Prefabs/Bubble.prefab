@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1311569617925367938}
   - component: {fileID: 2732648801628988168}
   - component: {fileID: 6002812699567276619}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 512
+  m_text: 1024
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -73,8 +73,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283914071
-  m_fontColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -92,13 +92,13 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 238
-  m_fontSizeBase: 238
+  m_fontSize: 196.07
+  m_fontSizeBase: 196.07
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 6002812699567276619}
-    characterCount: 3
+    characterCount: 4
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -165,8 +165,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2517235810023933154}
-  - component: {fileID: 3117284571170293511}
-  m_Layer: 0
+  - component: {fileID: 3528564181434275672}
+  m_Layer: 8
   m_Name: Bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3117284571170293511
+--- !u!114 &3528564181434275672
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,6 +204,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeModel: {fileID: 3327717503906133557}
   inactiveModel: {fileID: 515638051502194247}
+  bubbleCanvas: {fileID: 8182665854405942002}
+  valueText: {fileID: 6002812699567276619}
+  bubbleCollider: {fileID: 6079472021409773741}
+  colourPalettes:
+  - value: 2
+    color: {r: 1, g: 0.28773582, b: 0.28773582, a: 1}
+  - value: 4
+    color: {r: 1, g: 0.40701026, b: 0, a: 1}
+  - value: 8
+    color: {r: 1, g: 0.66133523, b: 0, a: 1}
+  - value: 16
+    color: {r: 1, g: 0.77448, b: 0, a: 1}
+  - value: 32
+    color: {r: 0.6979463, g: 1, b: 0.36320752, a: 1}
+  - value: 64
+    color: {r: 0.43867922, g: 1, b: 0.8449685, a: 1}
+  - value: 128
+    color: {r: 0.3726415, g: 0.56468093, b: 1, a: 1}
+  - value: 256
+    color: {r: 1, g: 0.7311321, b: 0.95518875, a: 1}
+  - value: 512
+    color: {r: 0.6765753, g: 0.7131777, b: 0.7924528, a: 1}
+  - value: 1024
+    color: {r: 0.31065324, g: 0.3284271, b: 0.3679245, a: 1}
+  id: 0
+  value: 0
+  isActive: 0
+--- !u!64 &1169073307856724628
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3327717503906133557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2534964839176971238, guid: 146a00e8177aca14d9e0218f6e06d2c9, type: 3}
+--- !u!65 &4046775477118769416
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3327717503906133557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.006, y: 0.005999999, z: 0.001}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6079472021409773741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3327717503906133557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbf069908c99d048b444eb418243e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8182665854405942002
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +282,7 @@ GameObject:
   - component: {fileID: 7646987997243427498}
   - component: {fileID: 6823245331380460860}
   - component: {fileID: 5095602124056936132}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,6 +436,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 15e0637787629ec45a5b9e77c07f77d9, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 146a00e8177aca14d9e0218f6e06d2c9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 146a00e8177aca14d9e0218f6e06d2c9,
         type: 3}
       propertyPath: m_Name
@@ -379,6 +450,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 146a00e8177aca14d9e0218f6e06d2c9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 146a00e8177aca14d9e0218f6e06d2c9, type: 3}
@@ -460,7 +536,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 57f28267eb47c794cae4a8d973b869b4, type: 2}
+      objectReference: {fileID: 2100000, guid: 2ea29bf9fcc5f90478a7c25f1422ea15, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 146a00e8177aca14d9e0218f6e06d2c9,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 146a00e8177aca14d9e0218f6e06d2c9,
         type: 3}
       propertyPath: m_Name
@@ -470,6 +551,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 146a00e8177aca14d9e0218f6e06d2c9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 146a00e8177aca14d9e0218f6e06d2c9, type: 3}

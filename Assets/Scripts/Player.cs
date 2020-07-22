@@ -1,18 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject playerBubblePrefab;
+    [SerializeField] GameObject aimerBubbleHologram;
+    [SerializeField] LineRenderer lineRenderer;
+    public ParticleSystem rabbitParticles;
+
+    Bubble bubble;
+
+    public GameObject AimerBubbleHologram => aimerBubbleHologram;
+    public Bubble PlayerBubble => bubble;
+
+    void Awake()
     {
-        
+        if (bubble == null)
+        {
+            GameObject playerBubbleGO = GameObject.Instantiate(
+                        playerBubblePrefab,
+                        transform.position,
+                        Quaternion.identity,
+                        transform); //* switch taht to arena transform
+
+            bubble = playerBubbleGO.GetComponent<Bubble>();
+        }
+
+        AimerBubbleHologram.SetActive(false);
+        ToggleLineRenderer(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CreatePlayerBubble()
     {
-        
+        bubble.transform.position = transform.position; // todo change for the secondary shoot bubble
+        bubble.RandomizeBubbleValue();
+        bubble.ActivateBubble(true);
     }
+
+    public void ToggleLineRenderer(bool toggle)
+    {
+        lineRenderer.enabled = toggle;
+    }
+
+    public void UpdateLineRenderer(Vector3[] worldSpacePath)
+    {
+        Vector3[] localPositons = new Vector3[worldSpacePath.Length];
+        for (int i = 0; i < worldSpacePath.Length; i++)
+        {
+            localPositons[i] = transform.InverseTransformPoint(worldSpacePath[i]);
+        }
+        lineRenderer.positionCount = localPositons.Length;
+        lineRenderer.SetPositions(localPositons);
+    }
+
+    public void ToggleAimerHologram(bool toggle)
+    {
+        aimerBubbleHologram.SetActive(toggle);
+    }
+
+    // public void 
 }
