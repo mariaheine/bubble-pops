@@ -57,5 +57,8 @@ public class Player : MonoBehaviour
         aimerBubbleHologram.SetActive(toggle);
     }
 
-    // public void 
+    public void DestoryPlayerBubble()
+    {
+        
+    }
 }

@@ -14,7 +14,6 @@ public class ScreenBackgroundInput : MonoBehaviour, IPointerClickHandler, IDragH
 
     void Start()
     {
-        Debug.Log("Screen width:" + Screen.width);
         halfScreenWidth = Screen.width / 2f;
     }
 

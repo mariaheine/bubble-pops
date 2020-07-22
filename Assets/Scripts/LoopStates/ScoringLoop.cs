@@ -28,7 +28,6 @@ public class ScoringLoop : LoopState
 
         propagationComplete = () =>
             {
-                Debug.Log("propagation complete");
                 playLoop.StartCoroutine(
                     SeekoutSeparatedBubbles(
                         onSeparatedIslandsFound: () =>
@@ -279,7 +278,6 @@ public class ScoringLoop : LoopState
     IEnumerator TweenBubbleGathering(List<GridBubble> bubbleCluster, GridBubble collapseBubble, Action onBubblesGathered = null)
     {
         Sequence mySequence = DOTween.Sequence();
-
         
         Debug.Log("starting gathering sequence");
 

@@ -9,7 +9,6 @@ public class PlayerActionResult
 {
     public Vector3 aimDirection;
     public Vector3[] path;
-    public bool isGameOver;
 }
 
 public class PlayerActionLoop : LoopState
@@ -87,17 +86,7 @@ public class PlayerActionLoop : LoopState
             // ! Tween ortho size
             player.ToggleLineRenderer(false);
             player.AimerBubbleHologram.SetActive(false);
-
-            if (CheckIfPlayerAimedInLoseGameLocation())
-            {
-                isGameOver = true;
-                playLoop.SwitchState(PlayLoopState.NewRound);
-            }
-            else
-            {
-                isGameOver = false;
-                playLoop.SwitchState(PlayLoopState.ActionResolution);
-            }
+            playLoop.SwitchState(PlayLoopState.ActionResolution);
         }
     }
 
@@ -112,7 +101,7 @@ public class PlayerActionLoop : LoopState
         playLoop.ScreenBackgroundInput.HorizontalPressLocationChanged -= UpdateAimDirection;
         playLoop.ScreenBackgroundInput.HorizontalDragEnded -= CompleteAim;
 
-        return new PlayerActionResult { path = aimPath.ToArray(), aimDirection = aimDirection, isGameOver = isGameOver };
+        return new PlayerActionResult { path = aimPath.ToArray(), aimDirection = aimDirection };
     }
 
 
@@ -260,11 +249,5 @@ public class PlayerActionLoop : LoopState
         }
 
         playLoop.SetDebugText(centerhitangle, hitSide, angle);
-    }
-
-    // *hacky, if aimmResult is below that location the bubble is overflowing the grid, change to less hardcoded version
-    private bool CheckIfPlayerAimedInLoseGameLocation()
-    {
-        return aimResult.z < -3f;
     }
 }

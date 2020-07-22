@@ -5,10 +5,16 @@ using DG.Tweening;
 using static Game.Specifications;
 using System.Linq;
 
+public class ActionResolutionResult
+{
+    public bool isGameOver;
+}
+
 public class ActionResolutionLoop : LoopState
 {
     Vector3[] shootPath;
     Player player;
+    bool isGameOver;
 
     public ActionResolutionLoop(PlayLoop playLoop, TweenerLib tweenerLib) : base(playLoop, tweenerLib)
     {
@@ -26,11 +32,7 @@ public class ActionResolutionLoop : LoopState
 
     IEnumerator MovePlayerBubble()
     {
-        float distance = 0f;
-        for (int i = 0; i < shootPath.Length - 1; i++)
-        {
-            distance += (shootPath[i] - shootPath[i+1]).magnitude;
-        }
+        float distance = shootPath.SumPathDistance();
 
         Tween bubblePathTween = tweenerLib.PathTransform(
             player.PlayerBubble.transform,
@@ -41,21 +43,28 @@ public class ActionResolutionLoop : LoopState
         yield return bubblePathTween.WaitForCompletion();
 
         player.ToggleAimerHologram(false);
-        playLoop.SwitchState(PlayLoopState.Scoring);
+
+        if (CheckIfPlayerAimedInLoseGameLocation(shootPath.Last()))
+        {
+            isGameOver = true;
+            playLoop.SwitchState(PlayLoopState.NewRound);
+        }
+        else
+        {
+            isGameOver = false;
+            playLoop.SwitchState(PlayLoopState.Scoring);
+        }
     }
 
-    public override void GizmoDraw()
+    // todo move to grid manager
+    // *hacky, if aimmResult is below that location the bubble is overflowing the grid, change to less hardcoded version
+    private bool CheckIfPlayerAimedInLoseGameLocation(Vector3 aimResult)
     {
-        
+        return aimResult.z < -3f;
     }
 
     public override object End()
     {
-        return null;
-    }
-
-    public override void LogicUpdate()
-    {
-
+        return new ActionResolutionResult { isGameOver = this.isGameOver };
     }
 }

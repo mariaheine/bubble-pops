@@ -16,9 +16,9 @@ public class NewRoundLoop : LoopState
 
     public override void Begin(object pastStateResult)
     {
-        if (pastStateResult is PlayerActionResult playerActionResult)
+        if (pastStateResult is ActionResolutionResult actionResolutionResult)
         {
-            if (playerActionResult.isGameOver)
+            if (actionResolutionResult.isGameOver)
             {
                 playLoop.SwitchState(PlayLoopState.MainMenu);
                 GameOverSequence();
@@ -36,13 +36,12 @@ public class NewRoundLoop : LoopState
                 else
                 {
                     playLoop.SwitchState(PlayLoopState.PlayerAction);
+
+                    player.CreatePlayerBubble();
                 }
             });
-
-            player.CreatePlayerBubble();
         }
     }
-
 
     void GameOverSequence()
     {
@@ -73,9 +72,7 @@ public class NewRoundLoop : LoopState
                 .SetEase(Ease.OutBounce))
                 .OnComplete(() =>
                 {
-                    Debug.Log(bubble.transform.localScale);
                     bubble.transform.localScale = Vector3.one;
-                    Debug.Log(bubble.transform.localScale, bubble.transform);
                 });
         }
 

@@ -31,7 +31,6 @@ public class GridSpawner : MonoBehaviour
         float d = Mathf.Sin(Mathf.PI / 3) * bubbleDiameter;
         verticalStep = d + GRID_SPACING;
         bubbleRadius = bubbleDiameter / 2f;
-        isOddRow = GRID_HEIGHT % 2 == 0 ? true : false;
 
         PositionWalls();
         ClearGrid();
@@ -62,12 +61,15 @@ public class GridSpawner : MonoBehaviour
     {
         Vector3 bubblePos = playerBubble.GetBubblePosition();
 
+        
+        Debug.LogError("Looking for a slot");
+
         for (int i = 0; i < BubbleGrid.Length; i++)
         {
             if (BubbleGrid[i].IsActive == false)
             {
                 Vector3 otherBubblePos = BubbleGrid[i].Bubble.GetBubblePosition();
-                
+
                 if ((otherBubblePos - bubblePos).magnitude < 0.02)
                 {
                     BubbleGrid[i].Bubble.UpdateBubbleValue(playerBubble.Value);
@@ -79,6 +81,7 @@ public class GridSpawner : MonoBehaviour
         }
 
         Debug.LogError("Failed to find a slot for player bubble");
+
         return null;
     }
 
@@ -105,6 +108,8 @@ public class GridSpawner : MonoBehaviour
 
     IEnumerator CreateFirstRowsRoutine(Action onCompleted)
     {
+        isOddRow = GRID_HEIGHT % 2 == 0 ? true : false;
+
         GenerateInactiveGrid();
 
         for (int j = 0; j < STARTING_ROWS; j++)
@@ -159,15 +164,13 @@ public class GridSpawner : MonoBehaviour
                 isGameOver = true;
                 Debug.Log("game over");
             }
-            else
-            {
-                //* activate new slot
-                float xPosition = horizontalStep * i + oddRowOffset;
-                lastSlot.ActivateBubble(new Vector3(xPosition, 0f, verticalStep));
-                lastSlot.Bubble.ResetBubbleScale();
-                bubbleGrid.Enqueue(lastSlot);
-                ToplineBubbles.Add(lastSlot);
-            }
+
+            //* activate new slot
+            float xPosition = horizontalStep * i + oddRowOffset;
+            lastSlot.ActivateBubble(new Vector3(xPosition, 0f, verticalStep));
+            lastSlot.Bubble.ResetBubbleScale();
+            bubbleGrid.Enqueue(lastSlot);
+            ToplineBubbles.Add(lastSlot);
         }
 
         // * dirtyyy
