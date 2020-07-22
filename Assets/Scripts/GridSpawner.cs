@@ -39,8 +39,6 @@ public class GridSpawner : MonoBehaviour
 
     public void CreateFirstRows(Action onCompleted)
     {
-            Debug.Log("CreateFirstRowsCall");
-
         StartCoroutine(CreateFirstRowsRoutine(onCompleted));
     }
 
@@ -107,8 +105,6 @@ public class GridSpawner : MonoBehaviour
 
     IEnumerator CreateFirstRowsRoutine(Action onCompleted)
     {
-            Debug.Log("CreateFirstRowsRoutine");
-
         GenerateInactiveGrid();
 
         for (int j = 0; j < STARTING_ROWS; j++)
@@ -127,8 +123,6 @@ public class GridSpawner : MonoBehaviour
 
                 if (j == STARTING_ROWS - 1)
                 {
-                    Debug.Log("adding topline" + newSlot.IsActive);
-
                     ToplineBubbles.Clear();
                     ToplineBubbles.Add(newSlot);
                 }
