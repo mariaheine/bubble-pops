@@ -8,7 +8,7 @@ namespace Game
         public const int GRID_WIDTH = 6;
         public const int GRID_HEIGHT = 12;
         public const int EXPLOSION_SCORE = 1024;
-        public const int STARTING_ROWS = 10;
+        public const int STARTING_ROWS = 1;
         public const float BUBBLE_MOVEMENT_SPEED = 20f;
     }
 }

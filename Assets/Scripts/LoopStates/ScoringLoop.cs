@@ -241,9 +241,7 @@ public class ScoringLoop : LoopState
                 .SetEase(Ease.OutBounce))
                 .OnComplete(() =>
                 {
-                    Debug.Log(bubble.transform.localScale);
                     bubble.transform.localScale = Vector3.one;
-                    Debug.Log(bubble.transform.localScale, bubble.transform);
                 });
         }
 
@@ -279,8 +277,6 @@ public class ScoringLoop : LoopState
     {
         Sequence mySequence = DOTween.Sequence();
         
-        Debug.Log("starting gathering sequence");
-
         foreach (var b in bubbleCluster)
         {
             if (b == collapseBubble) continue;
@@ -300,10 +296,7 @@ public class ScoringLoop : LoopState
                 }));
         }
 
-
         yield return mySequence.WaitForCompletion();
-
-        Debug.Log("gathering sequennce over");
 
         onBubblesGathered?.Invoke();
     }

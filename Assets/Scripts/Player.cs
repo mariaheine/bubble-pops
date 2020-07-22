@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -14,16 +15,13 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-        if (bubble == null)
-        {
-            GameObject playerBubbleGO = GameObject.Instantiate(
-                        playerBubblePrefab,
-                        transform.position,
-                        Quaternion.identity,
-                        transform); //* switch taht to arena transform
+        GameObject playerBubbleGO = GameObject.Instantiate(
+                    playerBubblePrefab,
+                    transform.position,
+                    Quaternion.identity,
+                    transform); //* switch taht to arena transform
 
-            bubble = playerBubbleGO.GetComponent<Bubble>();
-        }
+        bubble = playerBubbleGO.GetComponent<Bubble>();
 
         AimerBubbleHologram.SetActive(false);
         ToggleLineRenderer(false);
@@ -57,8 +55,10 @@ public class Player : MonoBehaviour
         aimerBubbleHologram.SetActive(toggle);
     }
 
-    public void DestoryPlayerBubble()
+    public void DisablePlayerBubble()
     {
-        
+        bubble.ActivateBubble(false);
+        ToggleAimerHologram(false);
+        ToggleLineRenderer(false);
     }
 }

@@ -72,10 +72,6 @@ public class PlayerActionLoop : LoopState
         player.UpdateLineRenderer(aimPath.ToArray());
     }
 
-    public override void LogicUpdate()
-    {
-    }
-
     void CompleteAim(float horizontalPos)
     {
         lastHorizontalPressPosition = horizontalPos;

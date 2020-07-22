@@ -1,3 +1,5 @@
+using System;
+
 public abstract class LoopState
 {
     protected PlayLoop playLoop;

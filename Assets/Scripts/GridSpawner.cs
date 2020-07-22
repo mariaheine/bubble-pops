@@ -61,9 +61,6 @@ public class GridSpawner : MonoBehaviour
     {
         Vector3 bubblePos = playerBubble.GetBubblePosition();
 
-        
-        Debug.LogError("Looking for a slot");
-
         for (int i = 0; i < BubbleGrid.Length; i++)
         {
             if (BubbleGrid[i].IsActive == false)
@@ -123,6 +120,7 @@ public class GridSpawner : MonoBehaviour
 
                 GridBubble newSlot = bubbleGrid.Dequeue();
                 float xPosition = horizontalStep * i + oddRowOffset;
+                newSlot.Bubble.ResetBubbleScale();
                 newSlot.ActivateBubble(new Vector3(xPosition, 0f, verticalStep));
                 bubbleGrid.Enqueue(newSlot);
 
@@ -148,7 +146,6 @@ public class GridSpawner : MonoBehaviour
         float oddRowOffset = isOddRow ? bubbleRadius : 0f;
         isOddRow = !isOddRow;
 
-        Debug.Log("spawning");
         ToplineBubbles.Clear();
 
         for (int i = 0; i < GRID_WIDTH; i++)

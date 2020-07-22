@@ -31,12 +31,12 @@ public class NewRoundLoop : LoopState
                 if (isGameOver)
                 {
                     playLoop.SwitchState(PlayLoopState.MainMenu);
+                    player.DisablePlayerBubble();
                     GameOverSequence();
                 }
                 else
                 {
                     playLoop.SwitchState(PlayLoopState.PlayerAction);
-
                     player.CreatePlayerBubble();
                 }
             });
@@ -77,6 +77,7 @@ public class NewRoundLoop : LoopState
         }
 
         mySequence.AppendCallback(() => playLoop.GridSpawner.ClearGrid());
+        mySequence.SetAutoKill(true);
     }
 
     public override object End()
